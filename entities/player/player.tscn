@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://bg2ofi0fjyc8y" path="res://entities/player/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://dyiefyle2u05k" path="res://assets/kenney_dungeon/PNG/Double (128px)/Characters/purple_character.png" id="2_s65uf"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_o1a4q"]
+radius = 28.442924
+
 [node name="player" type="CharacterBody2D" unique_id=1222932709]
 script = ExtResource("1_cvnsp")
 speed = 1000.0
@@ -11,6 +14,7 @@ speed = 1000.0
 texture = ExtResource("2_s65uf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=705024486]
+shape = SubResource("CircleShape2D_o1a4q")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=970214204]
 zoom = Vector2(0.5, 0.5)

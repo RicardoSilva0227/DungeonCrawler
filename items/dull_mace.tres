@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b24qs33s6k8vj"]
+
+[ext_resource type="Script" uid="uid://cxw3sdvyi32gu" path="res://data/item_data.gd" id="1_8cmji"]
+
+[resource]
+script = ExtResource("1_8cmji")
+item_name = "Dull Mace"
+item_rarity = 2
+item_damage = 45
+metadata/_custom_type_script = "uid://cxw3sdvyi32gu"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://vc2gup2m13gf"]
+
+[ext_resource type="Script" uid="uid://cxw3sdvyi32gu" path="res://data/item_data.gd" id="1_4w0tt"]
+
+[resource]
+script = ExtResource("1_4w0tt")
+item_name = "Dull Bow"
+item_rarity = 1
+item_damage = 35
+metadata/_custom_type_script = "uid://cxw3sdvyi32gu"
