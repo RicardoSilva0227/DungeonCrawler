@@ -1,20 +1,25 @@
-[gd_scene format=3 uid="uid://dltvs7e0mj7qb"]
+[gd_scene format=3 uid="uid://d4g24brhlwvaq"]
 
-[ext_resource type="Script" uid="uid://bg2ofi0fjyc8y" path="res://entities/player/player.gd" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://dyiefyle2u05k" path="res://assets/kenney_dungeon/PNG/Double (128px)/Characters/purple_character.png" id="2_s65uf"]
+[ext_resource type="Script" uid="uid://c7lo54mqpqoj0" path="res://entities/player/player.gd" id="1_st60c"]
+[ext_resource type="PackedScene" uid="uid://x5ftusp0fv3j" path="res://entities/player/visuals/female_main_viking_visual.tscn" id="2_st60c"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_o1a4q"]
-radius = 28.442924
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xt8a0"]
+radius = 0.18945313
+height = 1.5164032
 
-[node name="player" type="CharacterBody2D" unique_id=1222932709]
-script = ExtResource("1_cvnsp")
-speed = 1000.0
+[node name="Player" type="CharacterBody3D" unique_id=1662156410]
+transform = Transform3D(0.99999994, 0, -1.7484554e-07, 0, 1, 0, 1.7484554e-07, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("1_st60c")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2094782034]
-texture = ExtResource("2_s65uf")
+[node name="Camera3D" type="Camera3D" parent="." unique_id=939473186]
+transform = Transform3D(0.70710677, -0.4999999, 0.5000001, 0, 0.70710695, 0.70710665, -0.70710677, -0.49999988, 0.5000002, 1.8066238, 3.2506108, 2.21452)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=705024486]
-shape = SubResource("CircleShape2D_o1a4q")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=124013977]
+transform = Transform3D(0.9999911, 0, 5.684342e-13, 0, 1, 0, -5.684342e-13, 0, 0.9999911, 0, 0.7535597, 0)
+shape = SubResource("CapsuleShape3D_xt8a0")
+debug_color = Color(0.9683388, 0, 0.47157395, 0.41960785)
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=970214204]
-zoom = Vector2(0.5, 0.5)
+[node name="Visuals" type="Node3D" parent="." unique_id=205980716]
+
+[node name="VikingRealm_Characters" parent="Visuals" unique_id=1737005145 instance=ExtResource("2_st60c")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)

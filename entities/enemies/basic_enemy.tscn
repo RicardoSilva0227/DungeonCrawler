@@ -18,6 +18,7 @@ script = ExtResource("1_5ykiu")
 shape = SubResource("CapsuleShape3D_xt8a0")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=420630569]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.005158961, -0.018557072, 0)
 mesh = ExtResource("2_5ykiu")
 skin = SubResource("Skin_v0hg6")
 

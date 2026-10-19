@@ -1,8 +1,39 @@
 [gd_scene format=3 uid="uid://cdt7wt4lasek6"]
 
-[ext_resource type="PackedScene" uid="uid://d4g24brhlwvaq" path="res://entities/player/player_3d.tscn" id="1_0x86n"]
-[ext_resource type="Material" uid="uid://bbcp6m5a2muug" path="res://assets/Synty/PolygonStarter/Materials/Plane/PolygonStarter_Mat_Plane_04_mat.tres" id="1_bigh4"]
+[ext_resource type="PackedScene" uid="uid://d4g24brhlwvaq" path="res://entities/player/player.tscn" id="1_0x86n"]
+[ext_resource type="Texture2D" uid="uid://mmb5psklcktv" path="res://assets/Synty/Viking_realm/Textures/Env/Grass_Texture_01.png" id="1_bsuw1"]
+[ext_resource type="Texture2D" uid="uid://7r427nngo7r5" path="res://assets/Synty/Viking_realm/Textures/Env/Snow_Texture_01.png" id="2_bigh4"]
 [ext_resource type="PackedScene" uid="uid://fkiea52plbvt" path="res://entities/enemies/basic_enemy.tscn" id="3_bsuw1"]
+[ext_resource type="Texture2D" uid="uid://d2gxgx0n0dxd8" path="res://assets/Synty/Viking_realm/Textures/Logs_01.png" id="3_q16ej"]
+[ext_resource type="Texture2D" uid="uid://c0fi0jahscrnd" path="res://assets/Synty/Viking_realm/Textures/Logs_02.png" id="4_hm5cb"]
+
+[sub_resource type="Sky" id="Sky_bsuw1"]
+
+[sub_resource type="Environment" id="Environment_xt8a0"]
+sky = SubResource("Sky_bsuw1")
+ambient_light_source = 3
+ambient_light_color = Color(0.90359825, 0.90359825, 0.9035982, 1)
+ambient_light_sky_contribution = 0.8
+ambient_light_energy = 1.45
+reflected_light_source = 1
+adjustment_enabled = true
+adjustment_brightness = 1.28
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wtt2s"]
+albedo_texture = ExtResource("1_bsuw1")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xi54h"]
+resource_name = "PolygonStarter_Mat_Plane_04_mat"
+depth_draw_mode = 1
+albedo_texture = ExtResource("2_bigh4")
+roughness = 0.8
+uv1_scale = Vector3(1, 1, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2esxy"]
+albedo_texture = ExtResource("3_q16ej")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_60l4g"]
+albedo_texture = ExtResource("4_hm5cb")
 
 [node name="test_room_3d" type="Node3D" unique_id=1382381163]
 
@@ -10,27 +41,32 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.613544, 12.36034, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1047189212]
+environment = SubResource("Environment_xt8a0")
 
 [node name="Floor" type="CSGBox3D" parent="." unique_id=2094611121]
 transform = Transform3D(0.99999845, 0, 0.0017453282, 3.0461708e-06, 0.99999845, -0.0017453255, -0.0017453256, 0.0017453283, 0.99999684, 0, 1, 0)
 rotation_order = 0
+material_override = SubResource("StandardMaterial3D_wtt2s")
 use_collision = true
 size = Vector3(20, 1, 34.495117)
-material = ExtResource("1_bigh4")
+material = SubResource("StandardMaterial3D_xi54h")
 
 [node name="Wall1" type="CSGBox3D" parent="." unique_id=2024523986]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.43463, 2.806223, 0.038410187)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.43463, 4.140199, 0.10777187)
+material_override = SubResource("StandardMaterial3D_2esxy")
 use_collision = true
-size = Vector3(1, 5.500122, 20)
+size = Vector3(1, 5.500122, 34.506104)
 
 [node name="Wall2" type="CSGBox3D" parent="." unique_id=1311093563]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.541253, 2.7769399, 0.019205093)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.541253, 4.250341, 0.00032377243)
+material_override = SubResource("StandardMaterial3D_60l4g")
 use_collision = true
-size = Vector3(1, 5.500122, 20)
-
-[node name="Player" parent="." unique_id=280365876 instance=ExtResource("1_0x86n")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.26480198, 3.6373086, 0.2535321)
-motion_mode = 0
+size = Vector3(1, 5.500122, 34.465546)
 
 [node name="basicEnemy" parent="." unique_id=532429185 instance=ExtResource("3_bsuw1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3057375, 4.279187, -1.2417336)
+
+[node name="Player" parent="." unique_id=1662156410 instance=ExtResource("1_0x86n")]
+transform = Transform3D(0.99999994, 0, -1.7484554e-07, 0, 1, 0, 1.7484554e-07, 0, 0.99999994, -0.92541456, 1.8800402, 5.0290856)
+speed = 4.0
+run_speed = 10.0
