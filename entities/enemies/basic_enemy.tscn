@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://fkiea52plbvt"]
+
+[ext_resource type="Script" uid="uid://djp7vx12len8e" path="res://entities/enemies/basic_enemy.gd" id="1_5ykiu"]
+[ext_resource type="Script" uid="uid://kdcy384nnsai" path="res://entities/components/health_component.gd" id="1_iookv"]
+[ext_resource type="ArrayMesh" uid="uid://dtwf7g22qbyip" path="res://assets/Synty/PolygonStarter/Models/extracted/SM_PolygonPrototype_Icon_Letter_Question_01.res" id="2_5ykiu"]
+[ext_resource type="Script" uid="uid://b1t0cm3jycowh" path="res://entities/components/hurtbox.gd" id="4_axigu"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xt8a0"]
+
+[sub_resource type="Skin" id="Skin_v0hg6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kn6p2"]
+
+[node name="basicEnemy" type="StaticBody3D" unique_id=532429185]
+script = ExtResource("1_5ykiu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1887567153]
+shape = SubResource("CapsuleShape3D_xt8a0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=420630569]
+mesh = ExtResource("2_5ykiu")
+skin = SubResource("Skin_v0hg6")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1357797152]
+script = ExtResource("1_iookv")
+metadata/_custom_type_script = "uid://kdcy384nnsai"
+
+[node name="Hurtbox" type="Area3D" parent="." unique_id=203273503 node_paths=PackedStringArray("health")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_axigu")
+health = NodePath("../HealthComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=923687227]
+shape = SubResource("CapsuleShape3D_kn6p2")

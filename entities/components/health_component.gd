@@ -1,25 +1,33 @@
 class_name HealthComponent
 extends Node
 
-signal damaged(amount: int)
-signal health_changed(current: int, max: int)
+# SIGNALS: the emitter announces that something happened; it doesn't know or
+# care who is listening. Other nodes subscribe with `signal.connect(function)`
+# (once, usually in _ready), and that function then runs every time the signal
+# is emitted with `signal.emit(args)`.
+## Emitted after health changes. Use it to update UI.
+signal health_changed(current: float, max_value: float)
+## Emitted when damage is actually applied (not when it's ignored).
+signal damaged(amount: float)
+## Emitted once, when health reaches 0. Always emitted last.
 signal died
 
-@export var max_health: int = 100
-var current_health: int
+
+@export var max_health: float = 100.0
+var current_health: float
 
 func _ready() -> void:
 	current_health = max_health
 
-func take_damage(amount: int) -> void:
-	if current_health <= 0:
-		return	 
+func take_damage(amount: float) -> void:
+	if current_health <= 0 or amount <= 0:
+		return
 	
 	current_health = current_health - amount
-	current_health = maxi(current_health, 0)
+	current_health = maxi(current_health, 0.0)
 	health_changed.emit(current_health, max_health)
 	damaged.emit(amount)
 	
-	if(current_health == 0):
+	if(current_health == 0.0):
 		died.emit()
 	

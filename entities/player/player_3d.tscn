@@ -1,17 +1,11 @@
 [gd_scene format=3 uid="uid://d4g24brhlwvaq"]
 
-[ext_resource type="PackedScene" uid="uid://gg5r2wjxrbxq" path="res://assets/Synty/PolygonStarter/Models/Characters.fbx" id="1_21b0d"]
 [ext_resource type="Script" uid="uid://c7lo54mqpqoj0" path="res://entities/player/player_3d.gd" id="1_st60c"]
-[ext_resource type="Animation" uid="uid://dyj2yhc5aei6t" path="res://assets/Animations/walk.res" id="3_lnj8g"]
+[ext_resource type="PackedScene" uid="uid://bg1jqny2svb7q" path="res://entities/player/visuals/female_main_visual.tscn" id="2_st60c"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xt8a0"]
 radius = 0.18945313
-height = 1.6481934
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hqyov"]
-_data = {
-&"walk": ExtResource("3_lnj8g")
-}
+height = 1.5164032
 
 [node name="Player" type="CharacterBody3D" unique_id=1662156410]
 transform = Transform3D(0.99999994, 0, -1.7484554e-07, 0, 1, 0, 1.7484554e-07, 0, 0.99999994, 0, 0, 0)
@@ -19,17 +13,14 @@ motion_mode = 1
 script = ExtResource("1_st60c")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=939473186]
-transform = Transform3D(0.70710677, -0.49999997, 0.5, 0, 0.7071068, 0.70710677, -0.70710677, -0.49999997, 0.5, 2, 2, 2.5)
+transform = Transform3D(0.70710677, -0.4999999, 0.5000001, 0, 0.70710695, 0.70710665, -0.70710677, -0.49999988, 0.5000002, 1.8066238, 3.2506108, 2.21452)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=124013977]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12618336, 0)
+transform = Transform3D(0.9999911, 0, 5.684342e-13, 0, 1, 0, -5.684342e-13, 0, 0.9999911, 0, 0.7535597, 0)
 shape = SubResource("CapsuleShape3D_xt8a0")
 debug_color = Color(0.9683388, 0, 0.47157395, 0.41960785)
 
 [node name="Visuals" type="Node3D" parent="." unique_id=205980716]
 
-[node name="Characters" parent="Visuals" unique_id=1184403987 instance=ExtResource("1_21b0d")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -0.73257697, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=765254570]
-libraries/default = SubResource("AnimationLibrary_hqyov")
+[node name="main_character_visual" parent="Visuals" unique_id=1729925539 instance=ExtResource("2_st60c")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
