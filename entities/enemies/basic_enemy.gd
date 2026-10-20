@@ -12,3 +12,6 @@ func _on_health_changed(current, max_value) -> void:
 
 func _on_died() -> void:
 	queue_free()
+
+func _process(delta: float) -> void:
+	position.x += sin(Time.get_ticks_msec() / 500.0) * delta * 3.0

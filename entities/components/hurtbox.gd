@@ -1,3 +1,4 @@
+class_name Hurtbox
 extends Area3D
 
 @export var health: HealthComponent

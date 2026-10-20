@@ -2,35 +2,47 @@
 
 [ext_resource type="Script" uid="uid://djp7vx12len8e" path="res://entities/enemies/basic_enemy.gd" id="1_5ykiu"]
 [ext_resource type="Script" uid="uid://kdcy384nnsai" path="res://entities/components/health_component.gd" id="1_iookv"]
-[ext_resource type="ArrayMesh" uid="uid://dtwf7g22qbyip" path="res://assets/Synty/PolygonStarter/Models/extracted/SM_PolygonPrototype_Icon_Letter_Question_01.res" id="2_5ykiu"]
+[ext_resource type="PackedScene" uid="uid://cmcpu1d3i7d2r" path="res://entities/enemies/Visuals/viking_realm_characters_enemy_1.tscn" id="4_4lwq5"]
 [ext_resource type="Script" uid="uid://b1t0cm3jycowh" path="res://entities/components/hurtbox.gd" id="4_axigu"]
+[ext_resource type="PackedScene" uid="uid://by48hvlaml4d6" path="res://ui/health_bar.tscn" id="5_4lwq5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xt8a0"]
-
-[sub_resource type="Skin" id="Skin_v0hg6"]
+radius = 0.30908203
+height = 1.907959
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kn6p2"]
+radius = 0.32470703
+height = 1.9003906
 
 [node name="basicEnemy" type="StaticBody3D" unique_id=532429185]
 script = ExtResource("1_5ykiu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1887567153]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013254702, 0.79523563, 0)
 shape = SubResource("CapsuleShape3D_xt8a0")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=420630569]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.005158961, -0.018557072, 0)
-mesh = ExtResource("2_5ykiu")
-skin = SubResource("Skin_v0hg6")
 
 [node name="HealthComponent" type="Node" parent="." unique_id=1357797152]
 script = ExtResource("1_iookv")
 metadata/_custom_type_script = "uid://kdcy384nnsai"
 
 [node name="Hurtbox" type="Area3D" parent="." unique_id=203273503 node_paths=PackedStringArray("health")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12880951, 0)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("4_axigu")
 health = NodePath("../HealthComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Hurtbox" unique_id=923687227]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6693015, 0)
 shape = SubResource("CapsuleShape3D_kn6p2")
+
+[node name="Visual" type="Node3D" parent="." unique_id=2113558566]
+
+[node name="VikingRealm_Characters_Enemy_1" parent="Visual" unique_id=287550427 instance=ExtResource("4_4lwq5")]
+
+[node name="Control" parent="." unique_id=2130882766 node_paths=PackedStringArray("follow_target", "health") instance=ExtResource("5_4lwq5")]
+follow_target = NodePath("../BarAnchor")
+health = NodePath("../HealthComponent")
+
+[node name="BarAnchor" type="Marker3D" parent="." unique_id=1784391647]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.008575, 0)

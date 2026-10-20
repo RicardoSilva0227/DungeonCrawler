@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://by48hvlaml4d6"]
+
+[ext_resource type="Script" uid="uid://b2wires0rtktu" path="res://ui/health_bar.gd" id="1_rwxrv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xt8a0"]
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kn6p2"]
+bg_color = Color(0.7529412, 0.22352941, 0.16862746, 1)
+
+[node name="Control" type="Control" unique_id=2130882766]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("1_rwxrv")
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=783705688]
+layout_mode = 0
+offset_right = 52.0
+offset_bottom = 8.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_xt8a0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_kn6p2")
+show_percentage = false

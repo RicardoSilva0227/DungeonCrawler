@@ -6,9 +6,9 @@ extends CharacterBody3D
 @export var camera_yaw_degrees: float = 45.0  # must match your camera's yaw
 
 @onready var visuals: Node3D = $Visuals
-@onready var anim: AnimationPlayer = $Visuals.find_child("AnimationPlayer", true, false)
+@onready var anim: AnimationPlayer = visuals.find_child("AnimationPlayer", true, false)
 
-
+const ENEMY_HURTBOX_LAYER := 4
 
 func _physics_process(delta: float) -> void:
 	# 1. Read movement input
@@ -66,6 +66,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _try_attack(screen_pos: Vector2) -> void:
+	print('attack')
 	var camera := get_viewport().get_camera_3d()
 	var origin := camera.project_ray_origin(screen_pos)
 	var end := origin + camera.project_ray_normal(screen_pos) * 1000.0
@@ -73,11 +74,13 @@ func _try_attack(screen_pos: Vector2) -> void:
 	var query := PhysicsRayQueryParameters3D.create(origin, end)
 	query.collide_with_areas = true    # hurtboxes are Area3D
 	query.collide_with_bodies = false  # we don't want walls or bodies here
-	query.collision_mask = 1 << 3      # layer 4 only (layer N = bit N-1)
+	query.collision_mask = 1 << (ENEMY_HURTBOX_LAYER - 1)      # layer 4 only (layer N = bit N-1)
 
 	var result := get_world_3d().direct_space_state.intersect_ray(query)
 	
 	if (result.is_empty()):
 		return
-	
-	
+	else:
+		var hit_object = result["collider"]	
+		if hit_object is Hurtbox:
+			hit_object.receive_hit(25.0)	
