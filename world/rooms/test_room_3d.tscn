@@ -44,7 +44,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.613544, 12.36034, 0)
 environment = SubResource("Environment_xt8a0")
 
 [node name="Floor" type="CSGBox3D" parent="." unique_id=2094611121]
-transform = Transform3D(0.99999845, 0, 0.0017453282, 3.0461708e-06, 0.99999845, -0.0017453255, -0.0017453256, 0.0017453283, 0.99999684, 0, 1, 0)
+transform = Transform3D(0.99999845, 0, 0.0017453282, 3.0461708e-06, 0.99999845, -0.0017453255, -0.0017453256, 0.0017453283, 0.99999684, -0.0017542839, 1.0095563, -0.00017952919)
 rotation_order = 0
 material_override = SubResource("StandardMaterial3D_wtt2s")
 use_collision = true
@@ -58,13 +58,25 @@ use_collision = true
 size = Vector3(1, 5.500122, 34.506104)
 
 [node name="Wall2" type="CSGBox3D" parent="." unique_id=1311093563]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.541253, 4.250341, 0.00032377243)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.538229, 4.230999, -0.0015721321)
 material_override = SubResource("StandardMaterial3D_60l4g")
 use_collision = true
 size = Vector3(1, 5.500122, 34.465546)
 
 [node name="basicEnemy" parent="." unique_id=532429185 instance=ExtResource("3_bsuw1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11245823, 1.5250065, -0.8983898)
+transform = Transform3D(-0.015034035, 0, 0.999887, 0, 1, 0, -0.999887, 0, -0.015034035, -8.057197, 1.5748894, 7.2114267)
+
+[node name="basicEnemy2" parent="." unique_id=2130700293 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(0.19672155, 0, 0.9804594, 0, 1, 0, -0.9804594, 0, 0.19672155, -7.623888, 1.57517, 5.498996)
+
+[node name="basicEnemy3" parent="." unique_id=385431099 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(-0.064068496, 0, 0.9979455, 0, 1, 0, -0.9979455, 0, -0.064068496, -7.7649336, 1.5099483, -0.45897293)
+
+[node name="basicEnemy4" parent="." unique_id=784916372 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(0.8649804, 0, 0.5018056, 0, 1, 0, -0.5018056, 0, 0.8649804, -6.9614654, 1.5180645, -1.7513571)
+
+[node name="basicEnemy5" parent="." unique_id=1789546050 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(0.16837871, 0, 0.9857224, 0, 1, 0, -0.9857224, 0, 0.16837871, -7.9850044, 1.6207002, 8.585048)
 
 [node name="Player" parent="." unique_id=1662156410 instance=ExtResource("1_0x86n")]
 transform = Transform3D(0.99999994, 0, -1.7484554e-07, 0, 1, 0, 1.7484554e-07, 0, 0.99999994, -0.92541456, 1.8800402, 5.0290856)
