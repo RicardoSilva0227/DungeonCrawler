@@ -7,7 +7,7 @@ func _ready() -> void:
 	health.health_changed.connect(_on_health_changed)
 	
 func _on_health_changed(current, max_value) -> void:
-	print("health: ", current, " / ", max_value)
-
+	pass
+	
 func _on_died() -> void:
 	queue_free()

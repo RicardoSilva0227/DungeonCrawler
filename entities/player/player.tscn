@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://c7lo54mqpqoj0" path="res://entities/player/player.gd" id="1_st60c"]
 [ext_resource type="PackedScene" uid="uid://x5ftusp0fv3j" path="res://entities/player/visuals/female_main_viking_visual.tscn" id="2_st60c"]
-[ext_resource type="PackedScene" uid="uid://i1fgwyiajb23" path="res://items/Weapons/basic_sword.tscn" id="3_sglur"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xt8a0"]
 radius = 0.18945313
@@ -24,13 +23,3 @@ debug_color = Color(0.9683388, 0, 0.47157395, 0.41960785)
 
 [node name="Skin" parent="Visuals" unique_id=1737005145 instance=ExtResource("2_st60c")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-
-[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Visuals/Skin/Skeleton3D" parent_id_path=PackedInt32Array(1737005145, 2146259772) index="3" unique_id=2054488127]
-transform = Transform3D(-0.14761616, 0.97969633, 0.13566618, 0.938059, 0.18215583, -0.29472682, -0.3134554, 0.08375654, -0.9459016, -0.3799792, 0.6626303, -0.14848237)
-bone_name = "IndexFinger_03_R"
-bone_idx = 34
-
-[node name="SM_Wep_Sword_04" parent="Visuals/Skin/Skeleton3D/BoneAttachment3D" unique_id=723899832 instance=ExtResource("3_sglur")]
-transform = Transform3D(0.37395895, -0.88961315, -0.26218906, -0.92186314, -0.3875155, 2.9802322e-08, -0.10160234, 0.24170257, -0.96501654, 0.03015703, 0.034878775, 0.03898558)
-
-[editable path="Visuals/Skin"]

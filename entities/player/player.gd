@@ -10,16 +10,26 @@ extends CharacterBody3D
 	"AnimationPlayer", true, false
 )
 
-const ENEMY_HURTBOX_LAYER := 4
-const ATTACK_ANIMATION := "default/sword_outward_swing"
+@onready var sword: Sword = visuals.find_child(
+	"SM_Wep_Sword_04", true, false
+)
 
+const COMBO_ANIMATIONS: Array[String] = [
+	"default/sword_attack_1",
+	"default/sword_attack_2",
+    "default/sword_attack_3"
+]
+var combo_index: int = 0
+var attack_queued: bool = false
 var is_attacking: bool = false
 
 
 func _ready() -> void:
 	anim.animation_finished.connect(_on_animation_finished)
+	sword.hit.connect(_on_sword_hit)
 
 
+#region Movements
 func _physics_process(delta: float) -> void:
 	# 1. Read movement input
 	var input := Input.get_vector(
@@ -39,8 +49,13 @@ func _physics_process(delta: float) -> void:
 	var current_speed := run_speed if is_sprinting else speed
 
 	# 3. Apply movement
-	velocity.x = direction.x * current_speed
-	velocity.z = direction.z * current_speed
+	
+	if is_attacking: 
+		velocity.x = 0
+		velocity.z = 0
+	else:
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -60,6 +75,27 @@ func _physics_process(delta: float) -> void:
 	# 5. Handle animations
 	_animations(is_moving, is_sprinting)
 
+func _get_mouse_ground_point() -> Variant:
+	var camera := get_viewport().get_camera_3d()
+	var mouse := get_viewport().get_mouse_position()
+	var origin := camera.project_ray_origin(mouse)
+	var dir := camera.project_ray_normal(mouse)
+	var plane := Plane(Vector3.UP, global_position.y)
+	return plane.intersects_ray(origin, dir)  # Vector3, or null
+
+func _face_mouse() -> void:
+	var point = _get_mouse_ground_point()
+	if point == null:
+		return
+	var dir: Vector3 = point - global_position
+	dir.y = 0.0
+	if dir.length_squared() < 0.01:
+		return   # cursor on top of the player, angle would be unstable
+	visuals.rotation.y = atan2(-dir.x, -dir.z)
+
+#endregion
+
+#region Attacks
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack"):
@@ -67,36 +103,29 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _try_attack(screen_pos: Vector2) -> void:
-	# Prevent attacking while already attacking
 	if is_attacking:
+		if combo_index < COMBO_ANIMATIONS.size() - 1:
+			attack_queued = true
 		return
 
+	combo_index = 0
+	_start_attack()
+
+
+func _start_attack() -> void:
 	is_attacking = true
+	attack_queued = false
+	_face_mouse()
+	sword.start_swing()
+	anim.play(COMBO_ANIMATIONS[combo_index], 0.1)
 
-	# Start attack animation
-	anim.play(ATTACK_ANIMATION, 0.2)
+func _on_sword_hit(hurtbox: Hurtbox) -> void:
+	hurtbox.receive_hit(25.0)
 
-	# Raycast toward mouse position
-	var camera := get_viewport().get_camera_3d()
-	var origin := camera.project_ray_origin(screen_pos)
-	var end := origin + camera.project_ray_normal(screen_pos) * 1000.0
 
-	var query := PhysicsRayQueryParameters3D.create(origin, end)
+#endregion
 
-	query.collide_with_areas = true
-	query.collide_with_bodies = false
-	query.collision_mask = 1 << (ENEMY_HURTBOX_LAYER - 1)
-
-	var result := get_world_3d().direct_space_state.intersect_ray(query)
-
-	if result.is_empty():
-		return
-
-	var hit_object = result["collider"]
-
-	if hit_object is Hurtbox:
-		hit_object.receive_hit(25.0)
-
+#region Animations
 
 func _animations(is_moving: bool, is_sprinting: bool) -> void:
 	# Never interrupt an attack
@@ -116,5 +145,24 @@ func _animations(is_moving: bool, is_sprinting: bool) -> void:
 
 
 func _on_animation_finished(animation_name: StringName) -> void:
-	if animation_name == ATTACK_ANIMATION:
+	if not is_attacking:
+		return
+
+	if animation_name != StringName(COMBO_ANIMATIONS[combo_index]):
+		return
+
+	if attack_queued and combo_index < COMBO_ANIMATIONS.size() - 1:
+		sword.end_swing()
+		combo_index += 1
+		_start_attack()
+	else:
 		is_attacking = false
+		attack_queued = false
+		combo_index = 0
+		sword.end_swing()
+
+
+#endregion
+
+
+	
