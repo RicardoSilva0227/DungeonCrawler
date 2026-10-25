@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://dptyf3u8kqcfc"]
+
+[ext_resource type="Script" uid="uid://1j7kmhnkdd24" path="res://ui/main_menu/MainMenu.gd" id="1_uhj5c"]
+[ext_resource type="Theme" uid="uid://bkc6pad521rta" path="res://ui/Themes/MainMenuButtons.tres" id="2_mu8pm"]
+
+[node name="MainMenu" type="Control" unique_id=172529049]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_mu8pm")
+script = ExtResource("1_uhj5c")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1737289952]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DarkOverlay" type="ColorRect" parent="Background" unique_id=1273850269]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09019608, 0.105882354, 0.1254902, 1)
+
+[node name="MenuContainer" type="CenterContainer" parent="." unique_id=2066195230]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuLayout" type="VBoxContainer" parent="MenuContainer" unique_id=1104274369]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="MenuContainer/MenuLayout" unique_id=366900750]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "In progress"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MenuContainer/MenuLayout" unique_id=673272551]
+layout_mode = 2
+
+[node name="ContinueButton" type="Button" parent="MenuContainer/MenuLayout" unique_id=1674647466]
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+disabled = true
+text = "Continue"
+
+[node name="LoadTestAreaButton" type="Button" parent="MenuContainer/MenuLayout" unique_id=1023582712]
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+text = "Test Area
+"
+
+[node name="NewGameButton" type="Button" parent="MenuContainer/MenuLayout" unique_id=591711196]
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+theme = ExtResource("2_mu8pm")
+disabled = true
+text = "New Game
+"
+
+[node name="LoadGameButton" type="Button" parent="MenuContainer/MenuLayout" unique_id=1018918036]
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+theme = ExtResource("2_mu8pm")
+disabled = true
+text = "Load Game"
+
+[node name="SettingsButton" type="Button" parent="MenuContainer/MenuLayout" unique_id=333122259]
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+theme = ExtResource("2_mu8pm")
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="MenuContainer/MenuLayout" unique_id=120806422]
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+theme = ExtResource("2_mu8pm")
+text = "Quit To Desktop"
+
+[connection signal="pressed" from="MenuContainer/MenuLayout/LoadTestAreaButton" to="." method="_on_load_test_area_button_pressed"]
+[connection signal="pressed" from="MenuContainer/MenuLayout/QuitButton" to="." method="_on_quit_button_pressed"]

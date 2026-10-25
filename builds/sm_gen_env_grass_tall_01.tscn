@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bb716m321s3es"]
+
+[ext_resource type="PackedScene" uid="uid://cxxqj38kne0j5" path="res://assets/Synty/Viking_realm/FBX/Generic/SM_Gen_Env_Grass_Tall_01.fbx" id="1_bwnl8"]
+[ext_resource type="Texture2D" uid="uid://d2lmllwoed4i1" path="res://assets/Synty/AlpineBiome/Textures/Grass_Texture_02.png" id="2_gtjhx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qxgm2"]
+albedo_texture = ExtResource("2_gtjhx")
+
+[node name="SM_Gen_Env_Grass_Tall_01" unique_id=377252290 instance=ExtResource("1_bwnl8")]
+
+[node name="SM_Gen_Env_Grass_Tall_01" parent="." index="0" unique_id=924907191]
+material_override = SubResource("StandardMaterial3D_qxgm2")

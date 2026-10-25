@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://cs2liya70llxd"]
+
+[ext_resource type="Script" uid="uid://cau6ku57s7wh1" path="res://entities/player/visuals/player_hud.gd" id="1_7n0e3"]
+[ext_resource type="Texture2D" uid="uid://dxhy4klisoyqn" path="res://assets/kenney_fantasy-ui-borders/PNG/Double/Border/panel-border-030.png" id="1_nvv8q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7n0e3"]
+bg_color = Color(0.20392157, 0.15294118, 0.16862746, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g4pcw"]
+bg_color = Color(0.65882355, 0.19607843, 0.24313726, 1)
+
+[sub_resource type="Theme" id="Theme_nvv8q"]
+ProgressBar/styles/background = SubResource("StyleBoxFlat_7n0e3")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_g4pcw")
+
+[node name="PlayerHud" type="CanvasLayer" unique_id=1846017811]
+script = ExtResource("1_7n0e3")
+
+[node name="HealthContainer" type="Control" parent="." unique_id=2018567335]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 324.0
+offset_bottom = 88.0
+
+[node name="HealthProgressBar" type="ProgressBar" parent="HealthContainer" unique_id=1297087781]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 12.0
+offset_right = 238.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_nvv8q")
+value = 100.0
+show_percentage = false
+
+[node name="Frame" type="NinePatchRect" parent="HealthContainer" unique_id=1360954200]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 250.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_nvv8q")
+region_rect = Rect2(0, 0, 96, 96)
+patch_margin_left = 30
+patch_margin_top = 30
+patch_margin_right = 30
+patch_margin_bottom = 30
+
+[node name="HealthLabel" type="Label" parent="HealthContainer" unique_id=406703021]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 14.0
+offset_right = 270.0
+offset_bottom = 50.0
+text = "100 / 100"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,67 +1,68 @@
+
 extends CharacterBody3D
 
+#region Exports
 @export var speed: float = 2.0
 @export var run_speed: float = 4.0
 @export var turn_speed: float = 12.0
-@export var camera_yaw_degrees: float = 45.0
+@export var camera_yaw_degrees: float = 80.0
+#endregion
 
+#region Node References
 @onready var visuals: Node3D = $Visuals
 @onready var anim: AnimationPlayer = visuals.find_child(
 	"AnimationPlayer", true, false
 )
-
 @onready var sword: Sword = visuals.find_child(
 	"SM_Wep_Sword_04", true, false
 )
 
-const COMBO_ANIMATIONS: Array[String] = [
-	"default/sword_attack_1",
-	"default/sword_attack_2",
-    "default/sword_attack_3"
-]
-var combo_index: int = 0
-var attack_queued: bool = false
-var is_attacking: bool = false
+@onready var combat: CombatComponent = $CombatComponent
+@onready var dodge: DodgeComponent = $DodgeComponent
+@onready var health: HealthComponent = $HealthComponent
+@onready var hud: PlayerHUD = $PlayerHud
+@onready var hurtbox: Hurtbox = $Hurtbox
+#endregion
 
-
+#region Lifecycle
 func _ready() -> void:
-	anim.animation_finished.connect(_on_animation_finished)
-	sword.hit.connect(_on_sword_hit)
+	combat.setup(anim, sword, _face_mouse)
+	hud.setup(health)
 
 
-#region Movements
 func _physics_process(delta: float) -> void:
-	# 1. Read movement input
-	var input := Input.get_vector(
-		"move_left", "move_right",
-		"move_up", "move_down"
-	)
-
-	var direction := Vector3(input.x, 0.0, input.y).rotated(
-		Vector3.UP,
-		deg_to_rad(camera_yaw_degrees)
-	)
-
-	# 2. Determine movement state
-	var is_moving := direction.length() > 0.1
+	var direction := _get_movement_direction()
+	var is_moving := direction.length_squared() > 0.01
 	var is_sprinting := is_moving and Input.is_action_pressed("sprint")
-
 	var current_speed := run_speed if is_sprinting else speed
 
-	# 3. Apply movement
-	
-	if is_attacking: 
-		velocity.x = 0
-		velocity.z = 0
+	dodge.update_cooldown(delta)
+
+	var was_dodging := dodge.is_dodging
+
+	if was_dodging:
+		var dodge_velocity := dodge.update_dodge(delta)
+		velocity.x = dodge_velocity.x
+		velocity.z = dodge_velocity.z
+
+	elif combat.is_attacking:
+		var attack_velocity := combat.get_attack_velocity(delta)
+		velocity.x = attack_velocity.x
+		velocity.z = attack_velocity.z
+
 	else:
 		velocity.x = direction.x * current_speed
 		velocity.z = direction.z * current_speed
+	
+	# Update damage immunity after advancing the dodge timer.
+	hurtbox.is_invincible = dodge.is_invincible
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	# 4. Rotate visuals toward movement
-	if is_moving:
+	# Preserve movement-based rotation during attacks.
+	# Lock rotation while dodging.
+	if is_moving and not was_dodging:
 		var target_angle := atan2(-direction.x, -direction.z)
 
 		visuals.rotation.y = lerp_angle(
@@ -72,64 +73,100 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-	# 5. Handle animations
-	_animations(is_moving, is_sprinting)
+	if not was_dodging:
+		_animations(is_moving, is_sprinting)
+#endregion
 
+#region Input
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("attack"):
+		if not dodge.is_dodging:
+			combat.try_attack()
+
+	elif event.is_action_pressed("dodge"):
+		_try_dodge()
+	
+	elif event.is_action_pressed("debug_damage"):
+		hurtbox.receive_hit(10.0)
+
+func _get_movement_direction() -> Vector3:
+	var input := Input.get_vector(
+		"move_left",
+		"move_right",
+		"move_up",
+		"move_down"
+	)
+
+	return Vector3(input.x, 0.0, input.y).rotated(
+		Vector3.UP,
+		deg_to_rad(camera_yaw_degrees)
+	)
+#endregion
+
+#region Combat
 func _get_mouse_ground_point() -> Variant:
 	var camera := get_viewport().get_camera_3d()
 	var mouse := get_viewport().get_mouse_position()
+
 	var origin := camera.project_ray_origin(mouse)
-	var dir := camera.project_ray_normal(mouse)
+	var ray_direction := camera.project_ray_normal(mouse)
+
 	var plane := Plane(Vector3.UP, global_position.y)
-	return plane.intersects_ray(origin, dir)  # Vector3, or null
+	return plane.intersects_ray(origin, ray_direction)
+
 
 func _face_mouse() -> void:
 	var point = _get_mouse_ground_point()
+
 	if point == null:
 		return
-	var dir: Vector3 = point - global_position
-	dir.y = 0.0
-	if dir.length_squared() < 0.01:
-		return   # cursor on top of the player, angle would be unstable
-	visuals.rotation.y = atan2(-dir.x, -dir.z)
 
-#endregion
+	var direction: Vector3 = point - global_position
+	direction.y = 0.0
 
-#region Attacks
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("attack"):
-		_try_attack(get_viewport().get_mouse_position())
-
-
-func _try_attack(screen_pos: Vector2) -> void:
-	if is_attacking:
-		if combo_index < COMBO_ANIMATIONS.size() - 1:
-			attack_queued = true
+	if direction.length_squared() < 0.01:
 		return
 
-	combo_index = 0
-	_start_attack()
+	visuals.rotation.y = atan2(-direction.x, -direction.z)
+#endregion
 
+#region Dodge
+func _try_dodge() -> void:
+	if not combat.can_dodge_cancel():
+		return
 
-func _start_attack() -> void:
-	is_attacking = true
-	attack_queued = false
-	_face_mouse()
-	sword.start_swing()
-	anim.play(COMBO_ANIMATIONS[combo_index], 0.1)
+	if not dodge.can_dodge():
+		return
 
-func _on_sword_hit(hurtbox: Hurtbox) -> void:
-	hurtbox.receive_hit(25.0)
+	# WASD determines the dodge direction.
+	var direction := _get_movement_direction()
 
+	# No movement input: dodge in the facing direction.
+	if direction.length_squared() < 0.01:
+		direction = -visuals.global_transform.basis.z
 
+	direction.y = 0.0
+	direction = direction.normalized()
+
+	if dodge.try_dodge(direction):
+		combat.cancel_attack()
+
+		# Face the direction of the roll.
+		visuals.rotation.y = atan2(
+			-direction.x,
+			-direction.z
+		)
+
+		var roll_animation := "default/dodge_roll"
+		var roll_length := anim.get_animation(roll_animation).length
+		var roll_speed := roll_length / dodge.dodge_duration
+
+		anim.play(roll_animation, 0.05, roll_speed)
 #endregion
 
 #region Animations
-
 func _animations(is_moving: bool, is_sprinting: bool) -> void:
-	# Never interrupt an attack
-	if is_attacking:
+	if combat.is_attacking or dodge.is_dodging:
 		return
 
 	var target_animation := "default/idle"
@@ -142,27 +179,4 @@ func _animations(is_moving: bool, is_sprinting: bool) -> void:
 
 	if anim.current_animation != target_animation:
 		anim.play(target_animation, 0.2)
-
-
-func _on_animation_finished(animation_name: StringName) -> void:
-	if not is_attacking:
-		return
-
-	if animation_name != StringName(COMBO_ANIMATIONS[combo_index]):
-		return
-
-	if attack_queued and combo_index < COMBO_ANIMATIONS.size() - 1:
-		sword.end_swing()
-		combo_index += 1
-		_start_attack()
-	else:
-		is_attacking = false
-		attack_queued = false
-		combo_index = 0
-		sword.end_swing()
-
-
 #endregion
-
-
-	

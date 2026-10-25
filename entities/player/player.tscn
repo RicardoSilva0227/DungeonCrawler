@@ -2,24 +2,112 @@
 
 [ext_resource type="Script" uid="uid://c7lo54mqpqoj0" path="res://entities/player/player.gd" id="1_st60c"]
 [ext_resource type="PackedScene" uid="uid://x5ftusp0fv3j" path="res://entities/player/visuals/female_main_viking_visual.tscn" id="2_st60c"]
+[ext_resource type="Script" uid="uid://b1t0cm3jycowh" path="res://entities/components/hurtbox.gd" id="3_qiwj3"]
+[ext_resource type="Script" uid="uid://yjcmfggl1ics" path="res://entities/components/combat_component.gd" id="3_sglur"]
+[ext_resource type="Script" uid="uid://wcmjhptrm3ct" path="res://entities/components/dodge_component.gd" id="4_bls4j"]
+[ext_resource type="Script" uid="uid://kdcy384nnsai" path="res://entities/components/health_component.gd" id="5_fkugw"]
+[ext_resource type="PackedScene" uid="uid://cs2liya70llxd" path="res://entities/player/visuals/player_hud.tscn" id="6_8fjmc"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sglur"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xt8a0"]
 radius = 0.18945313
 height = 1.5164032
 
-[node name="Player" type="CharacterBody3D" unique_id=1662156410]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kn6p2"]
+radius = 0.189
+height = 1.516
+
+[node name="Player" type="CharacterBody3D" unique_id=1662156410 groups=["player"]]
 transform = Transform3D(0.99999994, 0, -1.7484554e-07, 0, 1, 0, 1.7484554e-07, 0, 0.99999994, 0, 0, 0)
+collision_layer = 3
 script = ExtResource("1_st60c")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=939473186]
-transform = Transform3D(0.70710677, -0.4999999, 0.5000001, 0, 0.70710695, 0.70710665, -0.70710677, -0.49999988, 0.5000002, 1.8066238, 3.2506108, 2.21452)
+[node name="Visuals" type="Node3D" parent="." unique_id=205980716]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=124013977]
+[node name="Skin" parent="Visuals" unique_id=1737005145 instance=ExtResource("2_st60c")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Visuals/Skin" index="0" unique_id=1861819464]
+bones/0/position = Vector3(-0.056221385, -0.060119476, 0.06411761)
+bones/0/rotation = Quaternion(-0.036514044, -0.36722955, -0.013134928, 0.92932063)
+bones/2/rotation = Quaternion(0.98787713, 0.14962475, 0.0066852225, -0.04082504)
+bones/3/rotation = Quaternion(0.9965283, -0.0029956102, -0.014613091, -0.081907645)
+bones/4/rotation = Quaternion(0.9741203, 0.21015996, 0.01568967, -0.081708424)
+bones/5/rotation = Quaternion(-0.003566127, -0.0011659788, -0.029216874, 0.99956614)
+bones/6/rotation = Quaternion(0.45050386, 0.541626, -0.45308217, 0.5462637)
+bones/10/rotation = Quaternion(0.5590884, 0.64411134, -0.3995181, 0.33604476)
+bones/11/rotation = Quaternion(0.013851667, -0.2503791, -0.5324114, 0.8084903)
+bones/12/rotation = Quaternion(0.058511496, -0.40380922, 0.010865443, 0.9129056)
+bones/13/rotation = Quaternion(0.20501566, -0.16145599, 0.13780205, 0.95546395)
+bones/14/rotation = Quaternion(0.11277425, -0.08165173, -0.28257108, 0.9490882)
+bones/15/rotation = Quaternion(-0.039980523, 0.0017349643, 0.0072085224, 0.99917305)
+bones/17/rotation = Quaternion(-0.009067838, 0.0948752, -0.03164839, 0.9949447)
+bones/18/rotation = Quaternion(-0.0018217681, -0.0057634907, -0.14284272, 0.98972696)
+bones/19/rotation = Quaternion(0.003306529, -0.03815879, -0.57469964, 0.81746763)
+bones/21/rotation = Quaternion(-0.008440098, 0.22918437, -0.1379587, 0.96351993)
+bones/22/rotation = Quaternion(0.0009149123, -0.034124162, -0.18715481, 0.9817372)
+bones/23/rotation = Quaternion(-0.00448853, -0.04169561, -0.56209916, 0.82600605)
+bones/25/rotation = Quaternion(0.61465174, -0.52743876, -0.36933964, -0.45563138)
+bones/26/rotation = Quaternion(0.025318377, -0.02384206, -0.49601892, 0.867615)
+bones/27/rotation = Quaternion(-0.028464627, -0.35820946, -0.046225846, 0.9320617)
+bones/28/rotation = Quaternion(0.088329844, -0.2600111, -0.112198815, 0.9549888)
+bones/29/rotation = Quaternion(-0.0054038805, -0.099727504, -0.17807274, 0.9789359)
+bones/30/rotation = Quaternion(-0.0416728, 0.18047385, -0.03153468, 0.98219055)
+bones/32/rotation = Quaternion(-0.014766377, 0.164694, -0.044043075, 0.98525023)
+bones/33/rotation = Quaternion(-0.0013552811, -0.0033618403, -0.14755622, 0.9890471)
+bones/36/rotation = Quaternion(-0.020105809, 0.17105304, -0.116556026, 0.9781367)
+bones/37/rotation = Quaternion(0.0011808838, -0.04408096, -0.2604019, 0.96449286)
+bones/40/rotation = Quaternion(0.057156548, 0.61287683, -0.7748833, 0.14377439)
+bones/41/rotation = Quaternion(0.66660094, -0.22992292, 0.21011773, 0.6772216)
+bones/42/rotation = Quaternion(0.7234493, -0.6730113, 0.069901064, -0.13707991)
+bones/43/rotation = Quaternion(0.0036740433, -0.0021554106, 0.28498662, 0.95852214)
+bones/45/rotation = Quaternion(-0.643192, 0.18408, -0.01863187, 0.7430151)
+bones/46/rotation = Quaternion(0.51452494, -0.27237144, 0.16715394, 0.7956995)
+bones/47/rotation = Quaternion(0.8252876, -0.5554438, 0.005263934, -0.10175919)
+bones/48/rotation = Quaternion(-0.0148290545, 0.024840126, 0.28951254, 0.956737)
+
+[node name="RightHandSocket" parent="Visuals/Skin/Skeleton3D" index="3" unique_id=158099082]
+transform = Transform3D(0.026891153, 0.99368626, 0.1089222, 0.9614184, 0.004132401, -0.27505857, -0.27377227, 0.11211646, -0.95523685, -0.37168926, 0.7049297, -0.21336511)
+
+[node name="AnimationPlayer" parent="Visuals/Skin" index="1" unique_id=517838162]
+libraries/ = SubResource("AnimationLibrary_sglur")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=939473186]
+transform = Transform3D(0.45918107, -0.5171837, 0.72226983, -0.013033628, 0.8090433, 0.5876044, -0.888247, -0.27923062, 0.36475667, 6.704984, 6.1766386, 3.3058426)
+projection = 1
+size = 8.5
+far = 4002.5
+
+[node name="PlayerCollisionDetection" type="CollisionShape3D" parent="." unique_id=124013977]
 transform = Transform3D(0.9999911, 0, 5.684342e-13, 0, 1, 0, -5.684342e-13, 0, 0.9999911, 0, 0.7535597, 0)
 shape = SubResource("CapsuleShape3D_xt8a0")
 debug_color = Color(0.9683388, 0, 0.47157395, 0.41960785)
 
-[node name="Visuals" type="Node3D" parent="." unique_id=205980716]
+[node name="Hurtbox" type="Area3D" parent="." unique_id=152035746 node_paths=PackedStringArray("health")]
+transform = Transform3D(0.9999999, 0, 1.4210855e-14, 0, 1, 0, -1.4210855e-14, 0, 0.9999999, 0, 0, 0)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("3_qiwj3")
+health = NodePath("../HealthComponent")
 
-[node name="Skin" parent="Visuals" unique_id=1737005145 instance=ExtResource("2_st60c")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+[node name="DamageDetection" type="CollisionShape3D" parent="Hurtbox" unique_id=1519748346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.754, 0)
+shape = SubResource("CapsuleShape3D_kn6p2")
+
+[node name="CombatComponent" type="Node" parent="." unique_id=335619939]
+script = ExtResource("3_sglur")
+attack_move_speed = 3.0
+attack_move_duration = 0.3
+
+[node name="DodgeComponent" type="Node" parent="." unique_id=462551423]
+script = ExtResource("4_bls4j")
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1648061485]
+script = ExtResource("5_fkugw")
+
+[node name="PlayerHud" parent="." unique_id=1846017811 instance=ExtResource("6_8fjmc")]
+
+[editable path="Visuals/Skin"]
+[editable path="Visuals/Skin/Skeleton3D/RightHandSocket/SM_Wep_Sword_04"]

@@ -1,0 +1,58 @@
+[gd_scene format=4 uid="uid://ckl5wad1m5sw1"]
+
+[ext_resource type="PackedScene" uid="uid://cqtihi54nji2i" path="res://assets/Synty/Viking_realm/FBX/Generic/Base/SM_Bld_Base_Floor_01.fbx" id="1_jeisk"]
+[ext_resource type="Texture2D" uid="uid://ckioq5wnppf40" path="res://assets/Synty/Viking_realm/Textures/Wood_Rough_Combined.png" id="2_6vqxk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_87280"]
+resource_name = "A_Wall28"
+albedo_color = Color(0.9063318, 0.9063318, 0.9063318, 0.8)
+albedo_texture = ExtResource("2_6vqxk")
+emission_enabled = true
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_oxx3l"]
+_surfaces = [{
+"aabb": AABB(0, -3.3974647e-08, 0, 2.4999914, 1e-05, 2.4999998),
+"format": 34359742465,
+"index_count": 6,
+"index_data": PackedByteArray("AAABAAIAAgADAAAA"),
+"name": "A_Wall28",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("AAAAAIXrEbP//x9AAAAAAAAAAAAAAAAA3P8fQAAAAAAAAAAA3P8fQIXrEbP//x9A")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_57ogj"]
+resource_name = "SM_Bld_Base_Floor_01"
+_surfaces = [{
+"aabb": AABB(0, -3.3974647e-08, 0, 2.4999914, 1e-05, 2.4999998),
+"attribute_data": PackedByteArray("AIC6Ogeifz8AgLo6AIK0Onagfz8AgrQ6dqB/Pweifz8="),
+"format": 34359742487,
+"index_count": 6,
+"index_data": PackedByteArray("AAABAAIAAgADAAAA"),
+"material": SubResource("StandardMaterial3D_87280"),
+"name": "A_Wall28",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("AAAAAIXrEbP//x9AAAAAAAAAAAAAAAAA3P8fQAAAAAAAAAAA3P8fQIXrEbP//x9A/3///////7//f///////v/9///////+//3///////78=")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_oxx3l")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xt8a0"]
+size = Vector3(2.507965, 0.33422852, 2.5405579)
+
+[node name="SM_Bld_Base_Floor_01" unique_id=1208834307 instance=ExtResource("1_jeisk")]
+
+[node name="SM_Bld_Base_Floor_01" parent="." index="0" unique_id=530850608]
+mesh = SubResource("ArrayMesh_57ogj")
+
+[node name="Area3D" type="StaticBody3D" parent="SM_Bld_Base_Floor_01" index="0" unique_id=310146780]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25999, 0, 1.3105433)
+collision_layer = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SM_Bld_Base_Floor_01/Area3D" index="0" unique_id=448152215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.013137817, -0.1373291, -0.045547485)
+shape = SubResource("BoxShape3D_xt8a0")

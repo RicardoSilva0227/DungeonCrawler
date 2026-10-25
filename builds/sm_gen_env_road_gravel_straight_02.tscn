@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dylc2lo8q0at7"]
+
+[ext_resource type="PackedScene" uid="uid://cjw2url2rn550" path="res://assets/Synty/Viking_realm/FBX/Generic/SM_Gen_Env_Road_Gravel_Straight_02.fbx" id="1_065nc"]
+[ext_resource type="Texture2D" uid="uid://cjbjwthcrvvg1" path="res://assets/Synty/AlpineBiome/Textures/Dirt_Texture_01.png" id="2_4xixq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_idgav"]
+albedo_texture = ExtResource("2_4xixq")
+
+[node name="SM_Gen_Env_Road_Gravel_Straight_02" unique_id=770474941 instance=ExtResource("1_065nc")]
+
+[node name="SM_Gen_Env_Road_Gravel_Straight_02" parent="." index="0" unique_id=39969577]
+material_override = SubResource("StandardMaterial3D_idgav")

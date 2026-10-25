@@ -1,3 +1,4 @@
+
 class_name HealthComponent
 extends Node
 
@@ -12,22 +13,23 @@ signal damaged(amount: float)
 ## Emitted once, when health reaches 0. Always emitted last.
 signal died
 
-
 @export var max_health: float = 100.0
 var current_health: float
 
+
 func _ready() -> void:
 	current_health = max_health
+	health_changed.emit(current_health, max_health)
+
 
 func take_damage(amount: float) -> void:
 	if current_health <= 0 or amount <= 0:
 		return
-	
-	current_health = current_health - amount
-	current_health = maxi(current_health, 0.0)
+
+	current_health = maxf(current_health - amount, 0.0)
+
 	health_changed.emit(current_health, max_health)
 	damaged.emit(amount)
-	
-	if(current_health == 0.0):
+
+	if current_health == 0.0:
 		died.emit()
-	

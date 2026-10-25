@@ -1,0 +1,185 @@
+[gd_scene format=3 uid="uid://cdt7wt4lasek6"]
+
+[ext_resource type="PackedScene" uid="uid://d4g24brhlwvaq" path="res://entities/player/player.tscn" id="1_0x86n"]
+[ext_resource type="Texture2D" uid="uid://dhlil7d3qpdsy" path="res://assets/Synty/AlpineBiome/Textures/Grass_Texture_01.png" id="1_hm5cb"]
+[ext_resource type="Texture2D" uid="uid://7r427nngo7r5" path="res://assets/Synty/Viking_realm/Textures/Env/Snow_Texture_01.png" id="2_bigh4"]
+[ext_resource type="PackedScene" uid="uid://fkiea52plbvt" path="res://entities/enemies/basic_enemy.tscn" id="3_bsuw1"]
+[ext_resource type="Texture2D" uid="uid://d2gxgx0n0dxd8" path="res://assets/Synty/Viking_realm/Textures/Logs_01.png" id="3_q16ej"]
+[ext_resource type="Texture2D" uid="uid://cmfary6gvp2vt" path="res://assets/Synty/Viking_realm/Textures/PolygonVikingRealm_Stone_Wall_03.png" id="4_2esxy"]
+[ext_resource type="PackedScene" uid="uid://c8dj0xr1l5n2u" path="res://builds/lights/light_wall_01.tscn" id="8_hm5cb"]
+[ext_resource type="PackedScene" uid="uid://dylc2lo8q0at7" path="res://builds/sm_gen_env_road_gravel_straight_02.tscn" id="8_wtt2s"]
+[ext_resource type="PackedScene" uid="uid://bb716m321s3es" path="res://builds/sm_gen_env_grass_tall_01.tscn" id="9_2esxy"]
+[ext_resource type="PackedScene" uid="uid://bakf76yg24jsr" path="res://builds/env_flowers_04.tscn" id="9_wtt2s"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wtt2s"]
+
+[sub_resource type="Sky" id="Sky_bsuw1"]
+sky_material = SubResource("ProceduralSkyMaterial_wtt2s")
+process_mode = 1
+
+[sub_resource type="Environment" id="Environment_xt8a0"]
+sky = SubResource("Sky_bsuw1")
+ambient_light_source = 3
+ambient_light_color = Color(0.5647059, 0.54509807, 0.9607843, 0.6431373)
+ambient_light_sky_contribution = 0.9
+ambient_light_energy = 1.45
+reflected_light_source = 1
+tonemap_mode = 3
+tonemap_white = 6.0
+adjustment_enabled = true
+adjustment_brightness = 1.28
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wtt2s"]
+albedo_texture = ExtResource("1_hm5cb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xi54h"]
+resource_name = "PolygonStarter_Mat_Plane_04_mat"
+depth_draw_mode = 1
+albedo_texture = ExtResource("2_bigh4")
+roughness = 0.8
+uv1_scale = Vector3(1, 1, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2esxy"]
+albedo_texture = ExtResource("3_q16ej")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_60l4g"]
+albedo_texture = ExtResource("4_2esxy")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4kgem"]
+albedo_texture = ExtResource("4_2esxy")
+
+[node name="test_room_3d" type="Node3D" unique_id=1382381163]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1973660264]
+transform = Transform3D(0.115693174, 0.013253033, -0.99319667, -0.0015334145, 0.9999123, 0.013164015, 0.9932839, -6.0167427e-10, 0.11570334, -17.966413, 14.015145, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1047189212]
+environment = SubResource("Environment_xt8a0")
+
+[node name="Floor" type="CSGBox3D" parent="." unique_id=2094611121]
+transform = Transform3D(0.99999845, 0, 0.0017453282, 3.0461708e-06, 0.99999845, -0.0017453255, -0.0017453256, 0.0017453283, 0.99999684, -0.078327656, 1.0571208, -0.059883118)
+rotation_order = 0
+material_override = SubResource("StandardMaterial3D_wtt2s")
+use_collision = true
+size = Vector3(20, 1, 34.495117)
+material = SubResource("StandardMaterial3D_xi54h")
+
+[node name="Wall1" type="CSGBox3D" parent="." unique_id=2024523986]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.43463, 6.012735, 0.10777187)
+material_override = SubResource("StandardMaterial3D_2esxy")
+use_collision = true
+size = Vector3(1, 9.2451935, 34.506104)
+
+[node name="Wall3" type="CSGBox3D" parent="." unique_id=97222319]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.1466923, 6.012735, 0.10777187)
+visible = false
+material_override = SubResource("StandardMaterial3D_60l4g")
+use_collision = true
+size = Vector3(1, 9.2451935, 34.506104)
+
+[node name="Wall2" type="CSGBox3D" parent="." unique_id=148368410]
+transform = Transform3D(0.0022639781, 0, -0.99999744, 0, 1, 0, 0.99999744, 0, 0.0022639781, 0.0443207, 6.1353455, -16.865883)
+material_override = SubResource("StandardMaterial3D_4kgem")
+use_collision = true
+size = Vector3(1, 9.2451935, 19.97284)
+
+[node name="Wall4" type="CSGBox3D" parent="." unique_id=1636394429]
+transform = Transform3D(0.0022639781, 0, -0.99999744, 0, 1, 0, 0.99999744, 0, 0.0022639781, 0.0443207, 6.1353455, 16.83446)
+material_override = SubResource("StandardMaterial3D_4kgem")
+use_collision = true
+size = Vector3(1, 9.2451935, 19.97284)
+
+[node name="basicEnemy" parent="." unique_id=532429185 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(-0.015034035, 0, 0.999887, 0, 1, 0, -0.999887, 0, -0.015034035, -8.057197, 1.5748894, 7.2114267)
+
+[node name="basicEnemy2" parent="." unique_id=2130700293 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(0.19672155, 0, 0.9804594, 0, 1, 0, -0.9804594, 0, 0.19672155, -7.623888, 1.57517, 5.498996)
+
+[node name="basicEnemy3" parent="." unique_id=385431099 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(-0.064068496, 0, 0.9979455, 0, 1, 0, -0.9979455, 0, -0.064068496, -7.7649336, 1.5099483, -0.45897293)
+
+[node name="basicEnemy4" parent="." unique_id=784916372 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(0.8649804, 0, 0.5018056, 0, 1, 0, -0.5018056, 0, 0.8649804, -6.9614654, 1.5180645, -1.7513571)
+
+[node name="basicEnemy5" parent="." unique_id=1789546050 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(0.16837871, 0, 0.9857224, 0, 1, 0, -0.9857224, 0, 0.16837871, -7.9850044, 1.6207002, 8.585048)
+
+[node name="Player" parent="." unique_id=1662156410 instance=ExtResource("1_0x86n")]
+transform = Transform3D(0.99999994, 0, -1.7484554e-07, 0, 1, 0, 1.7484554e-07, 0, 0.99999994, -0.92541456, 1.8800402, 5.0290856)
+speed = 4.0
+run_speed = 10.0
+
+[node name="SM_Gen_Prop_Light_Wall_01" parent="." unique_id=296965059 instance=ExtResource("8_hm5cb")]
+transform = Transform3D(-0.15843669, 0, 0.9873691, 0, 1, 0, -0.9873691, 0, -0.15843669, -8.845405, 3.8160524, 1.5909736)
+
+[node name="SM_Gen_Prop_Light_Wall_03" parent="." unique_id=423297985 instance=ExtResource("8_hm5cb")]
+transform = Transform3D(-0.15843669, 0, 0.9873691, 0, 1, 0, -0.9873691, 0, -0.15843669, -8.845405, 3.8160524, 10.674244)
+
+[node name="SM_Gen_Prop_Light_Wall_02" parent="." unique_id=1544175155 instance=ExtResource("8_hm5cb")]
+transform = Transform3D(-0.15843669, 0, 0.9873691, 0, 1, 0, -0.9873691, 0, -0.15843669, -8.845405, 3.8160524, -7.8245525)
+
+[node name="SM_Gen_Env_Flowers_04" parent="." unique_id=1378045593 instance=ExtResource("9_wtt2s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.3354206, 1.636348, -12.310712)
+
+[node name="SM_Gen_Env_Flowers_08" parent="." unique_id=1552286564 instance=ExtResource("9_wtt2s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.620854, 1.636348, -8.791329)
+
+[node name="SM_Gen_Env_Flowers_05" parent="." unique_id=498145255 instance=ExtResource("9_wtt2s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.7056055, 1.6455595, -11.374148)
+
+[node name="SM_Gen_Env_Road_Gravel_Straight_02" parent="." unique_id=770474941 instance=ExtResource("8_wtt2s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05295992, 1.5216153, 7.034999)
+
+[node name="SM_Gen_Env_Road_Gravel_Straight_03" parent="." unique_id=1656078431 instance=ExtResource("8_wtt2s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05295992, 1.5216153, 10.549254)
+
+[node name="SM_Gen_Env_Road_Gravel_Straight_04" parent="." unique_id=399778962 instance=ExtResource("8_wtt2s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.024460793, 1.5216153, 2.9858847)
+
+[node name="SM_Gen_Env_Road_Gravel_Straight_05" parent="." unique_id=31391315 instance=ExtResource("8_wtt2s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.024460793, 1.5216153, -1.1265259)
+
+[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="." unique_id=2093823907]
+
+[node name="SM_Gen_Env_Grass_Tall_01" parent="MultiMeshInstance3D" unique_id=377252290 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7309828, 1.5813277, 0.14880395)
+
+[node name="SM_Gen_Env_Grass_Tall_02" parent="MultiMeshInstance3D" unique_id=775689040 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7309828, 1.5813277, 0.81585264)
+
+[node name="SM_Gen_Env_Grass_Tall_03" parent="MultiMeshInstance3D" unique_id=697365536 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7309828, 1.5813277, 1.4381115)
+
+[node name="SM_Gen_Env_Grass_Tall_04" parent="MultiMeshInstance3D" unique_id=942155006 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7309828, 1.5813277, 1.8576496)
+
+[node name="SM_Gen_Env_Grass_Tall_05" parent="MultiMeshInstance3D" unique_id=607820051 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7309828, 1.5813277, 2.0140374)
+
+[node name="SM_Gen_Env_Grass_Tall_06" parent="MultiMeshInstance3D" unique_id=1221464871 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7309828, 1.5813277, -0.5059693)
+
+[node name="SM_Gen_Env_Grass_Tall_07" parent="MultiMeshInstance3D" unique_id=51992255 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7309828, 1.5813277, 2.223558)
+
+[node name="SM_Gen_Env_Grass_Tall_08" parent="MultiMeshInstance3D" unique_id=537904186 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.244488, 1.5813277, 2.223558)
+
+[node name="SM_Gen_Env_Grass_Tall_09" parent="MultiMeshInstance3D" unique_id=1587210691 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.244488, 1.5813277, 2.8185833)
+
+[node name="SM_Gen_Env_Grass_Tall_10" parent="MultiMeshInstance3D" unique_id=59828828 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.244488, 1.5813277, 3.3760812)
+
+[node name="SM_Gen_Env_Grass_Tall_11" parent="MultiMeshInstance3D" unique_id=458409846 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.244488, 1.5813277, 3.9919274)
+
+[node name="SM_Gen_Env_Grass_Tall_12" parent="MultiMeshInstance3D" unique_id=1485929833 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8002648, 1.5813277, 3.9919274)
+
+[node name="SM_Gen_Env_Grass_Tall_13" parent="MultiMeshInstance3D" unique_id=2095010301 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8002648, 1.5813277, 3.2917726)
+
+[node name="SM_Gen_Env_Grass_Tall_14" parent="MultiMeshInstance3D" unique_id=316768816 instance=ExtResource("9_2esxy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8002648, 1.5813277, 2.8088388)
