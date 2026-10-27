@@ -3,3 +3,8 @@
 /android/
 assets/Synty
 .vscode
+shaders
+godot_converter.gd.uid
+godot_converter.gd
+converter_config.json
+conversion_log.txt
