@@ -90,21 +90,6 @@ material_override = SubResource("StandardMaterial3D_4kgem")
 use_collision = true
 size = Vector3(1, 9.2451935, 19.97284)
 
-[node name="basicEnemy" parent="." unique_id=532429185 instance=ExtResource("3_bsuw1")]
-transform = Transform3D(-0.015034035, 0, 0.999887, 0, 1, 0, -0.999887, 0, -0.015034035, -8.057197, 1.5748894, 7.2114267)
-
-[node name="basicEnemy2" parent="." unique_id=2130700293 instance=ExtResource("3_bsuw1")]
-transform = Transform3D(0.19672155, 0, 0.9804594, 0, 1, 0, -0.9804594, 0, 0.19672155, -7.623888, 1.57517, 5.498996)
-
-[node name="basicEnemy3" parent="." unique_id=385431099 instance=ExtResource("3_bsuw1")]
-transform = Transform3D(-0.064068496, 0, 0.9979455, 0, 1, 0, -0.9979455, 0, -0.064068496, -7.7649336, 1.5099483, -0.45897293)
-
-[node name="basicEnemy4" parent="." unique_id=784916372 instance=ExtResource("3_bsuw1")]
-transform = Transform3D(0.8649804, 0, 0.5018056, 0, 1, 0, -0.5018056, 0, 0.8649804, -6.9614654, 1.5180645, -1.7513571)
-
-[node name="basicEnemy5" parent="." unique_id=1789546050 instance=ExtResource("3_bsuw1")]
-transform = Transform3D(0.16837871, 0, 0.9857224, 0, 1, 0, -0.9857224, 0, 0.16837871, -7.9850044, 1.6207002, 8.585048)
-
 [node name="Player" parent="." unique_id=1662156410 instance=ExtResource("1_0x86n")]
 transform = Transform3D(0.99999994, 0, -1.7484554e-07, 0, 1, 0, 1.7484554e-07, 0, 0.99999994, -0.92541456, 1.8800402, 5.0290856)
 speed = 4.0
@@ -183,3 +168,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8002648, 1.5813277, 3.29177
 
 [node name="SM_Gen_Env_Grass_Tall_14" parent="MultiMeshInstance3D" unique_id=316768816 instance=ExtResource("9_2esxy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8002648, 1.5813277, 2.8088388)
+
+[node name="basicEnemy" parent="." unique_id=1343614506 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(-0.086272664, 0, 0.99627155, 0, 1, 0, -0.99627155, 0, -0.086272664, -7.9666266, 1.7074227, 0)
+
+[node name="basicEnemy2" parent="." unique_id=1288376734 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(-0.086272664, 0, 0.99627155, 0, 1, 0, -0.99627155, 0, -0.086272664, -8.0515175, 1.5819111, 2.6585536)
+
+[node name="basicEnemy3" parent="." unique_id=1214718029 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(-0.086272664, 0, 0.99627155, 0, 1, 0, -0.99627155, 0, -0.086272664, -8.237574, 1.5751603, 5.1589923)
+
+[node name="basicEnemy4" parent="." unique_id=553343530 instance=ExtResource("3_bsuw1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.7401037, 1.4986427, -3.4045134)

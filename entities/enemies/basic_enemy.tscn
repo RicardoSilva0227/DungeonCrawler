@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://djp7vx12len8e" path="res://entities/enemies/enemy.gd" id="1_5ykiu"]
 [ext_resource type="Script" uid="uid://kdcy384nnsai" path="res://entities/components/health_component.gd" id="1_iookv"]
-[ext_resource type="PackedScene" uid="uid://bykmb577xlfh6" path="res://entities/enemies/Visuals/viking_realm_characters_enemy1.tscn" id="4_4lwq5"]
+[ext_resource type="PackedScene" uid="uid://bykmb577xlfh6" path="res://entities/enemies/Visuals/basic_melee_viking_enemy_01.tscn" id="4_4lwq5"]
 [ext_resource type="Script" uid="uid://b1t0cm3jycowh" path="res://entities/components/hurtbox.gd" id="4_axigu"]
 [ext_resource type="PackedScene" uid="uid://by48hvlaml4d6" path="res://ui/health_bar.tscn" id="5_4lwq5"]
 
@@ -48,11 +48,7 @@ shape = SubResource("SphereShape3D_xt8a0")
 
 [node name="Visuals" type="Node3D" parent="." unique_id=2113558566]
 
-[node name="Skin" parent="Visuals" unique_id=1242628295 instance=ExtResource("4_4lwq5")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
-
-[node name="ForwardMarker" type="Marker3D" parent="Visuals" unique_id=1423634631]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+[node name="basic_melee_viking_enemy_01" parent="Visuals" unique_id=1240956066 instance=ExtResource("4_4lwq5")]
 
 [node name="Control" parent="." unique_id=2130882766 node_paths=PackedStringArray("follow_target", "health") instance=ExtResource("5_4lwq5")]
 follow_target = NodePath("../BarAnchor")
