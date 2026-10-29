@@ -52,7 +52,6 @@ func _start_attack() -> void:
 	attack_direction = attack_direction.normalized()
 
 	attack_move_time = attack_move_duration
-	sword.start_swing()
 	anim.play(COMBO_ANIMATIONS[combo_index], 0.1)
 
 func _on_animation_finished(animation_name: StringName) -> void:

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://djp7vx12len8e" path="res://entities/enemies/enemy.gd" id="1_5ykiu"]
 [ext_resource type="Script" uid="uid://kdcy384nnsai" path="res://entities/components/health_component.gd" id="1_iookv"]
+[ext_resource type="Script" uid="uid://ccnixnd7er0yb" path="res://entities/components/elemental_component.gd" id="3_43b24"]
 [ext_resource type="PackedScene" uid="uid://bykmb577xlfh6" path="res://entities/enemies/Visuals/basic_melee_viking_enemy_01.tscn" id="4_4lwq5"]
 [ext_resource type="Script" uid="uid://b1t0cm3jycowh" path="res://entities/components/hurtbox.gd" id="4_axigu"]
 [ext_resource type="PackedScene" uid="uid://by48hvlaml4d6" path="res://ui/health_bar.tscn" id="5_4lwq5"]
@@ -18,6 +19,7 @@ height = 1.9003906
 radius = 5.0
 
 [node name="basicEnemy" type="CharacterBody3D" unique_id=1343614506]
+collision_layer = 5
 script = ExtResource("1_5ykiu")
 
 [node name="CollisionNode" type="CollisionShape3D" parent="." unique_id=1887567153]
@@ -27,6 +29,9 @@ shape = SubResource("CapsuleShape3D_xt8a0")
 [node name="HealthComponent" type="Node" parent="." unique_id=1357797152]
 script = ExtResource("1_iookv")
 metadata/_custom_type_script = "uid://kdcy384nnsai"
+
+[node name="ElementalComponent" type="Node" parent="." unique_id=1569852729]
+script = ExtResource("3_43b24")
 
 [node name="Hurtbox" type="Area3D" parent="." unique_id=203273503 node_paths=PackedStringArray("health")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12880951, 0)
@@ -56,3 +61,8 @@ health = NodePath("../HealthComponent")
 
 [node name="BarAnchor" type="Marker3D" parent="." unique_id=1784391647]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.008575, 0)
+
+[node name="StatusLabel" type="Label3D" parent="." unique_id=466609211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+billboard = 1
+no_depth_test = true
