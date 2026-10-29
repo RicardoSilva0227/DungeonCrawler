@@ -35,7 +35,8 @@ func _physics_process(delta: float) -> void:
 	var is_moving := direction.length_squared() > 0.01
 	var is_sprinting := is_moving and Input.is_action_pressed("sprint")
 	var current_speed := run_speed if is_sprinting else speed
-
+	var mouse_position = _get_mouse_ground_point()
+	
 	dodge.update_cooldown(delta)
 
 	var was_dodging := dodge.is_dodging
@@ -62,6 +63,22 @@ func _physics_process(delta: float) -> void:
 
 	# Preserve movement-based rotation during attacks.
 	# Lock rotation while dodging.
+	
+	if not was_dodging and mouse_position != null:
+		var aim_direction: Vector3 = mouse_position - global_position
+		aim_direction.y = 0.0
+
+		if aim_direction.length_squared() > 0.01:
+			var target_angle := atan2(-aim_direction.x, -aim_direction.z)
+
+			visuals.rotation.y = lerp_angle(
+				visuals.rotation.y,
+				target_angle,
+				turn_speed * delta)
+		
+	if is_sprinting:
+		pass
+	
 	if is_moving and not was_dodging:
 		var target_angle := atan2(-direction.x, -direction.z)
 
@@ -113,8 +130,7 @@ func _get_mouse_ground_point() -> Variant:
 
 	var plane := Plane(Vector3.UP, global_position.y)
 	return plane.intersects_ray(origin, ray_direction)
-
-
+	
 func _face_mouse() -> void:
 	var point = _get_mouse_ground_point()
 
