@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://c4qgenntxnkmn"]
+
+[ext_resource type="Shader" uid="uid://pbrlspeh0mjo" path="res://shaders/fireball_shader.tres" id="1_s8ew3"]
+[ext_resource type="ArrayMesh" uid="uid://bhvcbqds3cgex" path="res://assets/assets_meshes_textures/meshes/sm_fireball_mesh.obj" id="2_78l4u"]
+[ext_resource type="Shader" uid="uid://cok1fnegx81ua" path="res://shaders/fire_header_shader.tres" id="3_o1sm2"]
+[ext_resource type="Shader" uid="uid://ce1u61jg3sf3" path="res://shaders/trail_shader.tres" id="4_j10gn"]
+[ext_resource type="Texture2D" uid="uid://cta6hbv32ydoq" path="res://assets/assets_meshes_textures/textures/T_VFX_simple_1.png" id="5_h3emr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3btms"]
+render_priority = 1
+shader = ExtResource("1_s8ew3")
+shader_parameter/fire_color = Color(1.8247963, 1.2029141, 0.5810318, 1)
+shader_parameter/speed = Vector2(0.1, 3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kn6p2"]
+render_priority = 0
+shader = ExtResource("3_o1sm2")
+shader_parameter/ball_color = Color(1, 0.49019608, 0.14901961, 1)
+shader_parameter/fresnel_power = 5.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_xt8a0"]
+
+[sub_resource type="Gradient" id="Gradient_mnqqj"]
+offsets = PackedFloat32Array(0.07226107, 0.24009325, 0.94871795, 1)
+colors = PackedColorArray(0.9607843, 0, 0, 0, 0.9607843, 0, 0, 1, 1.2873334, 1.2873334, 0, 1, 0.9607843, 0, 0, 0.11818182)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xuvjf"]
+gradient = SubResource("Gradient_mnqqj")
+use_hdr = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v0hg6"]
+render_priority = 0
+shader = ExtResource("4_j10gn")
+shader_parameter/color_texture = SubResource("GradientTexture1D_xuvjf")
+shader_parameter/trail_speed = Vector2(2, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_xt8a0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kth0f"]
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("5_h3emr")
+
+[sub_resource type="Curve" id="Curve_idj2w"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_v0hg6"]
+curve = SubResource("Curve_idj2w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xt8a0"]
+particle_flag_align_y = true
+emission_shape = 2
+emission_sphere_radius = 0.5
+direction = Vector3(-1, 0, 0)
+spread = 0.0
+initial_velocity_min = 3.0
+initial_velocity_max = 8.0
+radial_velocity_min = 0.99997765
+radial_velocity_max = 1.9999776
+gravity = Vector3(0, 0, 0)
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_v0hg6")
+color = Color(1.8247963, 1.2029141, 0.49019507, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_kn6p2"]
+size = Vector2(0.1, 0.5)
+
+[node name="VFX_FireBall" type="Node3D" unique_id=234644186]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7346492, 0, 0)
+
+[node name="SmFireballMesh" type="MeshInstance3D" parent="." unique_id=79841632]
+transform = Transform3D(-2.1855694e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.1855694e-08, 0.026044428, 0, 0.44546002)
+material_override = SubResource("ShaderMaterial_3btms")
+cast_shadow = 0
+mesh = ExtResource("2_78l4u")
+
+[node name="Fireball" type="MeshInstance3D" parent="." unique_id=369441608]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0.002196759, 0, 0.45880252)
+material_override = SubResource("ShaderMaterial_kn6p2")
+mesh = SubResource("SphereMesh_xt8a0")
+
+[node name="FireTrail" type="MeshInstance3D" parent="." unique_id=866820581]
+transform = Transform3D(3.1643944, 0, 0, 0, 1, 0, 0, 0, 1, -1.7119098, -0.080179155, 0.47468102)
+material_override = SubResource("ShaderMaterial_v0hg6")
+mesh = SubResource("QuadMesh_xt8a0")
+
+[node name="Sparks" type="GPUParticles3D" parent="." unique_id=1236651450]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.13434505, 0.5044817)
+material_override = SubResource("StandardMaterial3D_kth0f")
+amount = 10
+lifetime = 0.3
+explosiveness = 0.4
+process_material = SubResource("ParticleProcessMaterial_xt8a0")
+draw_pass_1 = SubResource("QuadMesh_kn6p2")

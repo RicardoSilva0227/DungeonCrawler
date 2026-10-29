@@ -2,7 +2,7 @@
 extends EditorScript
 
 func _run() -> void:
-	var path := "res://assets/Animations/Exported_Animations/sword_attack_test.res"
+	var path := "res://assets/Animations/Exported_Animations/death_01.res"
 	var animation := load(path) as Animation
 
 	if animation == null:

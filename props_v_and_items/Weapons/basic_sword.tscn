@@ -1,8 +1,12 @@
 [gd_scene format=4 uid="uid://i1fgwyiajb23"]
 
 [ext_resource type="PackedScene" uid="uid://x05eu4nx1wk3" path="res://assets/Synty/Viking_realm/FBX/SM_Wep_Sword_04.fbx" id="1_31ar7"]
-[ext_resource type="Script" uid="uid://ccxrgprrioc25" path="res://items/Weapons/sword.gd" id="2_6m2uq"]
+[ext_resource type="Script" uid="uid://ccxrgprrioc25" path="res://props_v_and_items/Weapons/sword.gd" id="2_6m2uq"]
 [ext_resource type="Texture2D" uid="uid://mwuxajpyh2wa" path="res://assets/Synty/Viking_realm/Textures/Metallic/PolygonVikingRealm_Metallic_01.tga" id="2_h1k4q"]
+[ext_resource type="Shader" uid="uid://tpijgly3gnff" path="res://addons/GPUTrail-main/shaders/trail.gdshader" id="4_8fjyi"]
+[ext_resource type="Shader" uid="uid://dpqnv6tivot45" path="res://addons/GPUTrail-main/shaders/trail_draw_pass.gdshader" id="5_k3wff"]
+[ext_resource type="Texture2D" uid="uid://bn0373p73fb75" path="res://assets/assets_meshes_textures/textures/T_VFX_Trail223.png" id="6_kaptj"]
+[ext_resource type="Script" uid="uid://cctio3t0q13i6" path="res://addons/GPUTrail-main/GPUTrail3D.gd" id="7_cdjfd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6m2uq"]
 resource_name = "lambert603"
@@ -34,10 +38,46 @@ blend_shape_mode = 0
 [sub_resource type="BoxShape3D" id="BoxShape3D_xt8a0"]
 size = Vector3(0.018798828, 0.0411644, 0.8486569)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pt3nb"]
+shader = ExtResource("4_8fjyi")
+
+[sub_resource type="Gradient" id="Gradient_svugo"]
+offsets = PackedFloat32Array(0, 0.60614526, 1)
+colors = PackedColorArray(2.5397153, 2.5397153, 2.5397153, 0.056, 0.801869, 0.801869, 0.801869, 0.093, 0, 0, 0, 0.117000006)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ocajb"]
+gradient = SubResource("Gradient_svugo")
+use_hdr = true
+
+[sub_resource type="Curve" id="Curve_g5xj8"]
+bake_resolution = 16
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_blc1t"]
+curve = SubResource("Curve_g5xj8")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wep3p"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("5_k3wff")
+shader_parameter/tex = ExtResource("6_kaptj")
+shader_parameter/mask_strength = 1.0
+shader_parameter/uv_offset = Vector2(0, 0)
+shader_parameter/color_ramp = SubResource("GradientTexture1D_ocajb")
+shader_parameter/curve = SubResource("CurveTexture_blc1t")
+shader_parameter/emmission_transform = Projection(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+shader_parameter/flags = 42
+
+[sub_resource type="QuadMesh" id="QuadMesh_fy1a0"]
+material = SubResource("ShaderMaterial_wep3p")
+
 [node name="SM_Wep_Sword_04" unique_id=723899832 instance=ExtResource("1_31ar7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08246675, 0)
 script = ExtResource("2_6m2uq")
 
 [node name="SM_Wep_Sword_04" parent="." index="0" unique_id=944467261]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03931871, 0)
 mesh = SubResource("ArrayMesh_a5ous")
 
 [node name="Area3D" type="Area3D" parent="." index="1" unique_id=1264653181]
@@ -47,5 +87,23 @@ collision_mask = 8
 monitoring = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0" unique_id=1884867127]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0018310547, -0.0017185211, 0.4320288)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000852863, -0.0017185211, 0.4320288)
 shape = SubResource("BoxShape3D_xt8a0")
+
+[node name="GPUTrail3D" type="GPUParticles3D" parent="." index="2" unique_id=1828622171]
+transform = Transform3D(1, 0, 0, 0, -0.00409993, 0.9975324, 0, -0.62629956, -0.0065301233, 0, -0.041183263, 0.8069139)
+amount = 40
+lifetime = 40.0
+explosiveness = 1.0
+fixed_fps = 240
+process_material = SubResource("ShaderMaterial_pt3nb")
+draw_pass_1 = SubResource("QuadMesh_fy1a0")
+script = ExtResource("7_cdjfd")
+length = 40
+length_seconds = 0.16666666666666666
+texture = ExtResource("6_kaptj")
+color_ramp = SubResource("GradientTexture1D_ocajb")
+curve = SubResource("CurveTexture_blc1t")
+use_red_as_alpha = true
+_defaults_have_been_set = true
+metadata/_custom_type_script = "uid://cctio3t0q13i6"

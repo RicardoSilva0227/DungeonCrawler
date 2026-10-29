@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Top down Dungeon Crawler"
+config/name="DarkFantasyArpg"
 run/main_scene="uid://dptyf3u8kqcfc"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
@@ -24,13 +24,18 @@ window/stretch/aspect="expand"
 
 project/assembly_name="Top down Dungeon Crawler"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/FoliageFlow/plugin.cfg", "res://addons/GPUTrail-main/plugin.cfg", "res://addons/brackeys_particle_controls/plugin.cfg")
+
 [file_customization]
 
 folder_colors={
+"res://addons/": "gray",
 "res://assets/": "yellow",
 "res://data/": "blue",
 "res://entities/": "red",
-"res://items/": "pink",
+"res://props_v_and_items/": "pink",
 "res://systems/": "orange",
 "res://ui/": "purple",
 "res://world/": "green"
